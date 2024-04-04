@@ -25,6 +25,7 @@ function App() {
               day={day.date}
               holiday={day.holiday}
               dayOfWeek={day.dayOfWeek}
+              month={day.month}
             />
           ))}
       </div>

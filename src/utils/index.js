@@ -7,19 +7,19 @@ export const daysOfMonth = async (
   const days = [];
   const lastDayOfMonth = new Date(year, month, 0).getDate();
 
-  const response = await axios.get(
+  const { data } = await axios.get(
     `https://brasilapi.com.br/api/feriados/v1/${year}`
   );
-  const holidays = response.data;
+  const holidays = data;
 
   for (let day = 1; day <= lastDayOfMonth; day++) {
     const date = new Date(year, month - 1, day);
-    const formattedDate = new Intl.DateTimeFormat("default", {
+    const formattedDate = new Intl.DateTimeFormat("pt-BR", {
       day: "numeric",
     }).format(date);
-    
+
     const dayOfWeek = new Intl.DateTimeFormat("pt-BR", {
-      weekday: "short"
+      weekday: "short",
     }).format(date);
 
     let holidayInfo = null;
@@ -34,8 +34,13 @@ export const daysOfMonth = async (
         break;
       }
     }
-    days.push({ date: formattedDate, dayOfWeek: dayOfWeek, holiday: holidayInfo });
+    days.push({
+      date: formattedDate,
+      dayOfWeek: dayOfWeek,
+      holiday: holidayInfo,
+      month: month
+    });
   }
-
+  
   return days;
 };
