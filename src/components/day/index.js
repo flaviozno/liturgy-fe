@@ -1,12 +1,18 @@
 import React from "react";
 import axios from "axios";
+
 export default function Day({ day, holiday, dayOfWeek, month }) {
   const handleSubmit = async (day, month) => {
-    axios
-      .post("http://localhost:3333/generate-with-date", {
-        day: day,
-        month: month,
-      })
+    await axios
+      .post(
+        process.env.REACT_APP_LITURGY_API,
+        {
+          day: day,
+          month: month,
+        },
+        { responseType: "blob" },
+        { crossDomain: true }
+      )
       .then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");

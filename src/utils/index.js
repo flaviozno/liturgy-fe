@@ -6,9 +6,8 @@ export const daysOfMonth = async (
 ) => {
   const days = [];
   const lastDayOfMonth = new Date(year, month, 0).getDate();
-
   const { data } = await axios.get(
-    `https://brasilapi.com.br/api/feriados/v1/${year}`
+    `${process.env.REACT_APP_HOLIDAYS_API}${year}`
   );
   const holidays = data;
 
